@@ -1,0 +1,24 @@
+# File: azure-pipelines-pr.yml
+pr:
+  branches:
+    include:
+      - dev
+      - master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- checkout: self
+
+- script: |
+    echo "Pull Request triggered pipeline!"
+    echo "Source branch: $(System.PullRequest.SourceBranch)"
+    echo "Target branch: $(System.PullRequest.TargetBranch)"
+  displayName: 'Show PR Info'
+
+- script: |
+    npm install
+    npm run test
+  displayName: 'Run Build & Test'
+
